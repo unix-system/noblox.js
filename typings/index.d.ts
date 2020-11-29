@@ -28,6 +28,17 @@ declare module "noblox.js" {
         Name: string;
     }
 
+    interface IGroupPartial {
+        Name: string,
+        Id: number,
+        EmblemUrl: string,
+        EmblemId: number,
+        Rank: number,
+        Role: string,
+        IsPrimary: boolean,
+        IsInClan: boolean
+    }
+
     interface ProductInfo {
         AssetId: number;
         ProductId: number;
@@ -969,6 +980,11 @@ declare module "noblox.js" {
     function configureItem(id: number, name: string, description: string, enableComments?: boolean, sellForRobux?: boolean, genreSelection?: number, jar?: CookieJar): Promise<void>;
 
     /**
+     * Deletes an item from the logged in user's inventory
+     */
+    function deleteFromInventory(assetId: number, jar?: CookieJar): Promise<void>;
+
+    /**
      * Uploads an image stored in `file` as an `assetType` with `name`. If `groupId` is specified it will be uploaded to that group. This is for uploading shirts, pants, or decals which have the assetTypes `11`, `12`, and `13`, respectively. Returns the asset `id` of the new item.
      */
     function uploadItem(name: string, assetType: UploadItemAssetType, file: string | stream.Stream, groupId?: number, jar?: CookieJar): Promise<UploadItemResponse>;
@@ -1021,7 +1037,7 @@ declare module "noblox.js" {
 
     function removeAssetId(assetId: number, jar?: CookieJar): Promise<void>;
 
-    function setAvatarBodyColours(args: AvatarBodyColors & {jar?: CookieJar}): Promise<void>;
+    function setAvatarBodyColors(args: AvatarBodyColors & {jar?: CookieJar}): Promise<void>;
 
     function setAvatarScales(args: AvatarScale & {jar?: CookieJar}): Promise<void>;
 
@@ -1176,6 +1192,8 @@ declare module "noblox.js" {
      * Gets a brief overview of the specified group.
      */
     function getGroup(groupId: number): Promise<Group>;
+
+    function getGroups(userId: number): Promise<IGroupPartial[]>
 
     /**
      * Gets the logo of the specified group.
